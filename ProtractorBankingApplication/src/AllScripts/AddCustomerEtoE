@@ -1,0 +1,24 @@
+var data=require(process.cwd()+'/src/Utility/BankingApplicationData.json')
+var cusdetails=require(process.cwd()+'/src/Utility/AddCustomerDetails.json')
+var HomePage=require(process.cwd()+'/src/Pages/HomePage.js')
+var ManagerPage=require(process.cwd()+'/src/Pages/ManagerPage.js')
+var AddCustomer=require(process.cwd()+'/src/Pages/AddCustomer.js')
+
+describe('Add Customer e2e automation',function(){
+	it('e2e flow',function(){
+		browser.get(data.url);
+		browser.sleep(4000);
+		HomePage.clickBankManagerLogin();
+		ManagerPage.clickAddCustomer();
+		AddCustomer.enterFirstName(cusdetails.CustomerDetails.FirstName);
+		AddCustomer.enterLastName(cusdetails.CustomerDetails.LastName);
+		AddCustomer.enterPostalCode(cusdetails.CustomerDetails.PostalCode);
+		browser.sleep(3000);
+	    AddCustomer.clickAddCustomer();
+	    browser.sleep(3000);
+	    var popupAlert = browser.switchTo().alert();
+	    expect(popupAlert.getText()).toEqual("Customer added successfully with customer id:");
+        popupAlert.dismiss();	   
+	});
+	
+}); 
